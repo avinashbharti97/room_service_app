@@ -1,4 +1,5 @@
 from rest_framework import serializers, viewsets
+from rest_framework import generics
 from .models import Asset, Worker, Task, AllocateTask
 
 class AssetSerializer(serializers.HyperlinkedModelSerializer):
@@ -44,6 +45,11 @@ class AllocateTaskViewSet(viewsets.ModelViewSet):
     queryset = AllocateTask.objects.all()
     serializer_class = AllocateTaskSerializer
 
-# class GetTaskViewSet(viewsets.ModelViewSet):
-#     queryset = AllocateTask.objects.all()
-#     serializer_class = AllocateTaskSerializer
+class GetTaskViewSet(viewsets.ModelViewSet):
+    # queryset = AllocateTask.objects.filter(workerId)
+    serializer_class = AllocateTaskSerializer
+
+    def get_queryset(self):
+  
+       
+        return AllocateTask.objects.filter(workerId)

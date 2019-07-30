@@ -19,6 +19,7 @@ from django.conf.urls import url, include
 from rest_framework import routers
 from core.note_api import NoteViewSet
 from hotel.hotel_api import AssetViewSet, WorkerViewSet, TaskViewSet, AllocateTaskViewSet
+from hotel import views as hotel_views
 
 
 router  =routers.DefaultRouter()
@@ -28,9 +29,11 @@ router.register(r'add-task', TaskViewSet)
 router.register(r'add-worker', WorkerViewSet)
 router.register(r'allocate-task', AllocateTaskViewSet)
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'', include('core.urls')),
     url(r'api-auth/', include('rest_framework.urls', namespace = 'rest_framework')),
     url(r'api/', include(router.urls)),
+    url(r'api/get-worker-task/(?P<worker_id>\d+)/', hotel_views.GetTask.as_view())
 ]
